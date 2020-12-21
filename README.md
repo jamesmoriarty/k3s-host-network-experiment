@@ -9,18 +9,16 @@
 
 \* can access locally on host ip e.g. http://10.0.0.238:8200/ 
 
-## Capture
+### Capture
 
 ```
 tshark -f "udp port 1900"
 ```
 
-## Discovery
+### Discovery
 
 ```
 nmap -sU -p 1900 --script=upnp-info 10.0.0.0/24
 ```
 
-```
-upnp_info.py
-```
+## Notes
