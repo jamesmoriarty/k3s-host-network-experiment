@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: minidlna
+  name: minidlna
+spec:
+  replicas: 1
+  # N.B. required to avoid hostNetwork single node port conflict.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: minidlna
+  template:
+    metadata:
+      labels:
+        app: minidlna
+    spec:
+      # N.B. The uPnP UDP broadcast’s are coming from the pod’s internal address are being dropped by the node before it egresses into your home network. 
+      hostNetwork: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      containers:
+      - image: vladgh/minidlna
+        name: minidlna
+        ports:
+        - containerPort: 8020
+          hostPort: 8020
+          protocol: TCP
+        - containerPort: 1900
+          hostPort: 1900
+          protocol: UDP

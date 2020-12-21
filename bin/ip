@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+hostname -I | cut -d' ' -f1
