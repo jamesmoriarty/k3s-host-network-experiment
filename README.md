@@ -18,5 +18,9 @@ tshark -f "udp port 1900"
 ## Discovery
 
 ```
+nmap -sU -p 1900 --script=upnp-info 10.0.0.0/24
+```
+
+```
 upnp_info.py
 ```
