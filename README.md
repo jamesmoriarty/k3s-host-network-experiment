@@ -42,7 +42,9 @@ nmap -sU -p 1900 --script=upnp-info 10.0.0.0/24
 
 ## Notes
 
-- udp/upnp broadcast/advertisement on 1900.
+- > Yes, you cannot access pods from outside the cluster when using flannel - they're on virtual interfaces with private addresses. This is normal.
+https://github.com/k3s-io/k3s/issues/1879#issuecomment-643557411
+- udp/upnp multicast (not broadcast) on 1900.
 - tcp/http serve on 8200. 
 - can generally access internally from host ip e.g. http://10.0.0.238:8200/
 - external port block on :8200? iptables, ufw, ...

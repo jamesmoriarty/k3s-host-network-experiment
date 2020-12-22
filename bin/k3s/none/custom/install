@@ -1,9 +1,9 @@
 #!/bin/sh -xe
 
-curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="0644" INSTALL_K3S_EXEC="--flannel-backend=none --no-flannel --disable-network-policy --no-deploy traefik" sh -
+curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="0644" INSTALL_K3S_EXEC="--flannel-backend=none --no-flannel --disable-network-policy --disable=traefik" sh -
 
 k3s kubectl apply -f minidlna.yaml
 
-k3s kubectl wait deploy/minidlna --for condition=available
+k3s kubectl wait deploy/minidlna --for condition=available --timeout=120s
 
 k3s kubectl get pods -A -o wide
