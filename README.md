@@ -1,13 +1,25 @@
 # k3s-host-network-experiment
 
-## Results
+Why did my minidlna setup stop working?
 
-| strategy | cni     | notes  |
+## Commands
+
+```
+bin/k3s/uninstall
+```
+
+```
+bin/k3s/<cni>/<strategy>/install
+```
+
+## Matrix
+
+| cni      | config  | notes  |
 |----------|---------|--------|
-| default  | flannel | local* |
-| exec     | flannel | local* |
-
-\* can access locally on host ip e.g. http://10.0.0.238:8200/ 
+| flannel  | default |        |
+| flannel  | custom  | `INSTALL_K3S_EXEC="--disable-network-policy --no-deploy traefik --bind-address=$(bin/ip) --node-ip=$(bin/ip) --node-external-ip=$(bin/ip) --cluster-cidr=192.168.0.0/16 --service-cidr=192.168.0.0/16"` |
+| none     | custom  | `INSTALL_K3S_EXEC="--flannel-backend=none --no-flannel --disable-network-policy --no-deploy traefik"` |
+| cilium   | default | `INSTALL_K3S_EXEC="--flannel-backend=none --no-flannel --disable-network-policy --no-deploy traefik"` |
 
 ### Capture
 
@@ -22,3 +34,6 @@ nmap -sU -p 1900 --script=upnp-info 10.0.0.0/24
 ```
 
 ## Notes
+
+- [k3s installer options](https://rancher.com/docs/k3s/latest/en/advanced/#starting-the-server-with-the-installation-script)
+- can generally access internally from host ip e.g. http://10.0.0.238:8200/
