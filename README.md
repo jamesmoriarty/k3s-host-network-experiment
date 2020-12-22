@@ -2,6 +2,17 @@
 
 Why did my minidlna setup stop working?
 
+## Update 1.
+
+```
+securityContext:
+  capabilities:
+    add:
+    - NET_ADMIN
+```
+
+Enables SSDP/udp multicast on :1900.
+
 ## Commands
 
 ```
@@ -26,6 +37,10 @@ bin/k3s/<cni>/<strategy>/install
 
 ```
 ss -lntp | grep -E ':(8200) '
+```
+
+```
+netstat -lntp
 ```
 
 ### Capture
